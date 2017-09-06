@@ -86,7 +86,7 @@ class CameraRollPicker extends Component {
   }
 
   render() {
-    var {dataSource} = this.state;
+    var {dataSource, loadingMore} = this.state;
     var {
       scrollRenderAheadDistance,
       initialListSize,
@@ -110,7 +110,12 @@ class CameraRollPicker extends Component {
         dataSource={dataSource}
         renderRow={rowData => this._renderRow(rowData)} />
     ) : (
-      <Text style={[{textAlign: 'center'}, emptyTextStyle]}>{emptyText}</Text>
+      loadingMore ?
+        <View style={styles.centered}>
+          <ActivityIndicator style={styles.spinner} />
+        </View>
+      :
+        <Text style={[{textAlign: 'center'}, emptyTextStyle]}>{emptyText}</Text>
     );
 
     return (
@@ -242,6 +247,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 5,
     backgroundColor: 'transparent',
+  },
+  centered: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })
 
